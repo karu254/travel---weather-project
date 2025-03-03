@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tourism Agencies</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <!-- Include Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    /* Define a height for the map container */
+    #map {
+      height: 400px; /* Adjust this value as needed */
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"></div>
+    <div class="agency-info">
+      <h1>Tourism Agencies</h1>
+      <p>Travel the world with us</p>
+    </div>
+    <div class="menu-icon">&#9776;</div>
+  </nav>
+
+  <div id="map"></div>
+
+  <div class="about-section">
+    <h2>About Us</h2>
+    <p>Welcome to our website! We specialize in providing unforgettable travel experiences around the globe. Whether you're seeking adventure, relaxation, or cultural exploration, we have the perfect destination for you. Explore our site to discover amazing deals and plan your next journey with us.</p>
+  </div>
+
+  <div class="contacts">
+    <a href="mailto:henrykaru77@gmail.com" target="_blank"><img src="{{ url_for('static', filename='email.png') }}" alt="Email"></a>
+    <a href="https://wa.me/+254111899521" target="_blank"><img src="{{ url_for('static', filename='whatsapp.png') }}" alt="WhatsApp"></a>
+    <a href="https://facebook.com" target="_blank"><img src="{{ url_for('static', filename='social_icons/facebook.png') }}" alt="Facebook"></a>
+    <a href="https://twitter.com" target="_blank"><img src="{{ url_for('static', filename='social_icons/twitter.png') }}" alt="Twitter"></a>
+    <a href="https://instagram.com" target="_blank"><img src="{{ url_for('static', filename='social_icons/instagram.png') }}" alt="Instagram"></a>
+  </div>
+
+  <!-- Include Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize map centered at Kenya
+    var map = L.map('map').setView([-1.2921, 36.8219], 6);
+
+    // Add tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map); 
+
+    
+
+      var locations = [ 
+  // Nairobi and Surroundings
+        { name: 'Nairobi National Park', coordinates: [-1.2783, 36.8272] },
+        { name: 'Karen Blixen Museum', coordinates: [-1.2856, 36.8169] },
+        { name: 'Giraffe Centre', coordinates: [-1.2856, 36.8169] },
+        { name: 'Bomas of Kenya', coordinates: [-1.2735, 36.8319] },
+        { name: 'Nairobi Arboretum', coordinates: [-1.2983, 36.8208] },
+
+  // Coastal Regions
+        { name: 'Mombasa Old Town', coordinates: [-4.0435, 39.6682] },
+        { name: 'Fort Jesus', coordinates: [-4.0375, 39.6682] },
+        { name: 'Diani Beach', coordinates: [-4.1417, 39.5317] },
+        { name: 'Watamu Beach', coordinates: [-3.8589, 39.3825] },
+
+  // Rift Valley
+        { name: 'Masai Mara National Reserve', coordinates: [-1.4062, 35.0081] },
+        { name: 'Lake Nakuru National Park', coordinates: [-0.3031, 36.0800] },
+        { name: 'Lake Naivasha', coordinates: [-0.7170, 36.4340] },
+        { name: "Hell's Gate National Park", coordinates: [-0.9129, 36.4553] },
+        { name: 'Longonot Mountain', coordinates: [-0.9129, 36.4553] },
+
+  // Central Highlands
+        { name: 'Mount Kenya National Park', coordinates: [-0.0333, 37.1833] },
+        { name: 'Aberdare National Park', coordinates: [-0.4167, 36.9500] },
+        { name: 'Nyeri Town', coordinates: [-0.4170, 36.9560] },
+
+  // Other Notable Locations
+        { name: 'Lamu Island', coordinates: [-1.1283, 40.8589] },
+        { name: 'Samburu National Reserve', coordinates: [-0.8033, 37.0667] },
+        { name: 'Tsavo National Park', coordinates: [-2.2000, 37.5000] }
+      ];
+
+    // Add markers and popups
+    locations.forEach(function(location) {
+      var marker = L.marker(location.coordinates).addTo(map);
+      marker.bindPopup('<b>' + location.name + '</b>').openPopup();
+      marker.on('click', function() {
+        // Redirect to the weather forecast page for the selected city
+        window.location.href = '/weather?city=' + encodeURIComponent(location.name);
+      });
+    });
+  </script>
+
+<!-- <div class="form-container">
+    <form action="/weather" method="post" class="weather-form">
+      <label for="city">Where are you going next?</label>
+      <input type="text" id="city" name="city" placeholder="Enter City" required>
+      <button type="submit">Get Weather Forecast</button>
+    </form>
+  </div> -->
+</body>
+</html>

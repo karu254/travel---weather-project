@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ city }} Weather Forecast</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='weather.css') }}">
+  
+</head>
+<body>
+  <h1>{{ city }} Weather Forecast</h1>
+
+  {% if error %}
+    <p>{{ error }}</p>
+  {% else %}
+    <h2>Daily Forecast</h2>
+
+    <div class="weather-container">
+      {% for day in forecast %}
+        <div class="weather-box">
+          <p>Date: {{ day.date }}</p>
+          <p>Day: {{ day.day }}</p>
+          <p>Weather: {{ day.weather }}</p>
+          <p>Temperature: {{ day.temp }} °C</p>
+          <p>Wind Speed: {{ day.wind_speed }} m/s</p>
+        </div>
+      {% endfor %}
+    </div>
+    
+    
+
+    <h2>Security Rating</h2>
+<div class="security-box"> 
+  <p>Security Rating for {{ city }}: {{ security_rating }}%</p>
+</div>
+
+
+    {% if images %}
+      <h2>Location Images</h2>
+      <div class="images-container">
+        {% for image in images %}
+          <img class="image" src="{{ image }}" alt="Location Image">
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No images found for {{ city }}</p>
+    {% endif %}
+  {% endif %}
+
+  <a href="/" class="back-to-search">Back to Search</a>
+
+</body>
+</html>
